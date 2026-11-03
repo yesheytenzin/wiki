@@ -69,6 +69,7 @@ nav:
       - Background jobs: rails/background-jobs.md
   - 4. Architecture:
       - API design: architecture/api-design.md
+      - SOLID design principles: architecture/solid.md
       - Queues and events: architecture/queues-events.md
       - Domain modeling and boundaries: architecture/domain-modeling.md
       - Consistency and concurrency: architecture/consistency.md

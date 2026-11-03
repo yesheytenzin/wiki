@@ -19,3 +19,11 @@ checking documentation.
 - What happens when a retry succeeds remotely but times out locally?
 - Which metric would tell you that queue consumers are falling behind?
 - What would you remove first from a system under overload?
+- What is the single reason this class should change?
+- Which variation deserves an extension point, and which should remain a
+  simple conditional?
+- Does this adapter honor the same inputs, outputs, and failures as the real
+  implementation?
+- Which client is forced to depend on methods it does not use?
+- Which high-level policy currently constructs or knows about an infrastructure
+  detail?
