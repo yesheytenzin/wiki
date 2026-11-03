@@ -1,8 +1,8 @@
 site_name: Backend Wiki
 site_description: A practical learning path for Ruby, Rails, and backend engineering.
-site_url: https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/
-repo_name: YOUR-USERNAME/YOUR-REPOSITORY
-repo_url: https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+site_url: https://yesheytenzin.github.io/wiki/
+repo_name: yesheytenzin/wiki
+repo_url: https://github.com/yesheytenzin/wiki
 
 theme:
   name: material
