@@ -31,3 +31,31 @@ queue capacity, but it does not replace load testing.
 Database connections, downstream quotas, memory, and queue workers are common
 limits. Add headroom and define overload behavior: reject, shed optional work,
 degrade, or queue.
+
+## Connection budgets
+
+Every process, worker, admin task, and migration may consume a database
+connection. Calculate the maximum across the deployment rather than sizing
+one process in isolation. A pool larger than the database can serve increases
+waiting and failure rather than throughput.
+
+The same applies to HTTP clients, file descriptors, provider quotas, and Redis
+connections. Make limits visible and fail with a bounded error.
+
+## Scaling choices
+
+- **Vertical:** more CPU or memory; simple but eventually bounded.
+- **Horizontal:** more processes or hosts; requires shared durable state and
+  correct coordination.
+- **Caching:** reduces repeated work; adds staleness and invalidation.
+- **Asynchronous work:** smooths bursts; adds delay and retry semantics.
+- **Partitioning:** spreads data or work; adds routing and operational cost.
+
+Choose the smallest change that addresses the measured bottleneck. Estimate
+cost, failure blast radius, and rollback before introducing infrastructure.
+
+## Practice
+
+Model a service at 100, 1,000, and 10,000 requests per second. Identify the
+first bottleneck, calculate connection and worker needs, define overload
+responses, and list the measurements required to validate the model.

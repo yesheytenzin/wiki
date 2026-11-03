@@ -15,3 +15,21 @@ and explain.
 
 For every project, write a short design note covering data ownership,
 invariants, failure modes, and how you would roll back a bad deployment.
+
+## Project completion standard
+
+Do not consider a project complete when the happy path works. A complete
+project has:
+
+- a README explaining local setup and architecture;
+- migrations and constraints for important invariants;
+- unit, request, integration, and failure-path tests;
+- authentication and authorization where data is private;
+- bounded input, pagination, timeouts, retries, and idempotency;
+- structured logs, metrics, and a health check;
+- a deployment procedure, rollback plan, and backup/restore note;
+- one load result and one postmortem for an injected failure.
+
+For an expert-level project, publish an architecture decision record comparing
+at least two approaches. Explain why the chosen design is sufficient now and
+what signal would justify changing it.

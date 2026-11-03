@@ -26,3 +26,31 @@ restoration may take), then exercise the procedure.
 
 During an incident, stabilize first, communicate impact and next update time,
 preserve evidence, and write a blameless postmortem afterward.
+
+## SLO design
+
+Choose indicators that reflect user experience: successful requests, useful
+responses, completion time, and freshness. Set targets by critical operation,
+not only by service average. A fast health check does not prove that checkout
+or publishing content works.
+
+Use error budgets to make change decisions. A budget is not permission to
+spend errors carelessly; it is a shared signal for balancing feature delivery
+and reliability work.
+
+## Runbooks
+
+A runbook should state symptoms, dashboards, safe diagnostic commands,
+mitigations, escalation contacts, and verification steps. Include what not to
+do, such as restarting every worker before preserving evidence.
+
+Practice the runbook with a game day. Inject a dependency timeout, queue
+backlog, expired certificate, or database failover and measure time to detect,
+mitigate, and restore.
+
+## Data recovery
+
+Define recovery point and recovery time objectives for each data class. Test
+restores in an isolated environment, verify row counts and application
+behavior, and document how to prevent the restored system from sending
+duplicate external effects.

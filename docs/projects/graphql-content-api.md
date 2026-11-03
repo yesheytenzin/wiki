@@ -22,3 +22,27 @@ database into the API.
 - Introduce a slow resolver and identify it from production-style metrics.
 - Add a mutation idempotency key and test a client retry.
 - Deprecate a field without breaking the operation registry.
+
+## Suggested schema
+
+```graphql
+type Query {
+  article(id: ID!): Article
+  articles(first: Int!, after: String): ArticleConnection!
+}
+
+type Mutation {
+  publishArticle(input: PublishArticleInput!): PublishArticlePayload!
+}
+```
+
+Keep draft visibility in the resolver/application policy, not in a client
+convention. Add a database index for the publication and ordering path, and
+make the cursor stable across inserts.
+
+## Expert extension
+
+Add persisted queries, field-cost analysis, a subscription for editorial
+updates, schema deprecation reporting, and a multi-tenant authorization
+policy. Load-test nested article/tag/author queries and compare SQL count and
+response size before and after batching.

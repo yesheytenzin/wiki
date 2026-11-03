@@ -30,3 +30,44 @@ end
 
 The application should have one consistent error format and should never
 return a success-shaped response when an operation failed.
+
+## What happens in detail
+
+1. The web server accepts bytes and applies connection and body limits.
+2. Rails middleware assigns request context, parses cookies, and handles
+   cross-cutting concerns.
+3. The router matches method and path to a controller action.
+4. Authentication establishes an actor; authorization checks the operation.
+5. Parameter handling validates shape and permitted fields.
+6. Application code reads or changes domain state.
+7. The database commits or rolls back the transaction.
+8. The serializer builds a bounded response.
+9. Logs, metrics, and traces record the outcome without secrets.
+
+The order matters. Authorization before loading an unscoped record prevents
+data exposure; committing before enqueueing an outbox event prevents a worker
+from observing state that later rolls back.
+
+## Transactions and callbacks
+
+A controller action is not automatically a transaction. Put the transaction
+around the smallest group of writes that must succeed together. Do not hold it
+open while calling a remote service. Use after-commit behavior or an outbox
+for effects that depend on durable state.
+
+Callbacks can make lifecycle behavior convenient but hidden. Use them for
+local, unsurprising invariants; make external calls and important workflows
+explicit operations that can be tested and retried.
+
+## Performance and failure
+
+Measure time spent in routing, application code, SQL, serialization, and
+downstream calls. A fast controller can still produce a slow request through
+an N+1 query or an unbounded response. Define timeouts and handle client
+disconnects so abandoned work does not consume resources indefinitely.
+
+## Practice
+
+Trace one request from `curl` to a committed row. Add a request ID, a
+transaction failure, an authorization failure, and a slow dependency. For
+each case, document status, logs, metrics, database state, and retry behavior.

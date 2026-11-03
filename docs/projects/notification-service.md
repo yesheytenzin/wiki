@@ -21,3 +21,29 @@ application events.
 
 Document which outcomes may duplicate and which business effects must never
 duplicate.
+
+## Suggested data model
+
+```text
+notifications
+  id
+  event_id          unique
+  recipient_id
+  channel
+  status
+  attempt_count
+  next_attempt_at
+  last_error_code
+  sent_at
+```
+
+The unique event ID prevents the same domain event from creating duplicate
+notification intents. A separate provider idempotency key protects against a
+timeout after the provider accepted a request.
+
+## Expert extension
+
+Add user preferences, quiet hours, provider failover, template versioning,
+delivery webhooks, and an operator replay tool. Specify which preferences are
+evaluated at enqueue time versus delivery time and how a change affects
+already queued notifications.

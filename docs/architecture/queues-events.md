@@ -26,3 +26,33 @@ constraint where appropriate.
 
 Keep payloads small and version them. Prefer IDs plus a lookup when current
 state is required; include a snapshot when historical meaning must not change.
+
+## Event evolution
+
+Events are contracts between producers and consumers. Add optional fields
+before relying on them, tolerate unknown fields, and version a breaking
+semantic change. A consumer should not fail because a producer added metadata
+it does not use.
+
+Record event ID, type, schema version, aggregate ID, occurred-at time, and
+causation or correlation ID. These fields make replay and incident
+investigation possible without copying sensitive payloads into every log.
+
+## Ordering and partitioning
+
+Global ordering is expensive and often unnecessary. If order matters, define
+the scope: per account, order, or aggregate. Partition by that key and make
+the consumer reject or defer an event that arrives before its predecessor.
+
+Do not assume queue order survives retries, multiple workers, or multiple
+partitions. Put the required sequence in the data model.
+
+## Backpressure and replay
+
+Monitor queue depth and oldest message age, not just worker CPU. When producers
+outpace consumers, bound the queue, reject optional work, or reduce production.
+An unbounded queue moves failure into memory and delays.
+
+Replay requires idempotent consumers, a time range or event selection, rate
+limits, and a way to avoid sending external side effects twice. Test replay
+against a copy or dry-run mode before changing production.

@@ -35,3 +35,27 @@ result.
 Common Rails performance failures include N+1 queries, unbounded serialization,
 large synchronous jobs, and missing database indexes. Fix the boundary that
 causes the cost rather than adding a cache to hide it.
+
+## Database performance
+
+Start with query count and query time. Use `EXPLAIN (ANALYZE, BUFFERS)` to
+check whether the planner uses the expected index, how many rows it scans,
+and where I/O occurs. An index can be harmful when it is low-selectivity or
+adds too much write and storage cost.
+
+Use eager loading for known associations, select only needed columns, and
+batch large work. Do not replace a query problem with an oversized cache that
+creates stale or inconsistent results.
+
+## Load testing
+
+Define a workload mix, dataset size, concurrency, duration, warm-up period,
+and success criteria. Observe CPU, memory, garbage collection, database
+connections, locks, queue age, and downstream calls. A benchmark without
+representative data can optimize the wrong system.
+
+## Practice
+
+Create an N+1 regression, measure it, fix it, and add a query-count test.
+Then add a cache with an explicit stale-data policy and simulate cache
+eviction and a stampede.

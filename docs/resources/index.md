@@ -35,3 +35,18 @@ links can be reviewed rather than accumulating indefinitely.
 
 Ruby, Rails, RSpec, RuboCop, Bundler, PostgreSQL, Redis, Docker, GitHub
 Actions, `curl`, `psql`, `EXPLAIN`, and an application performance monitor.
+
+## Study method
+
+For each resource:
+
+1. Write the question you want answered.
+2. Read or watch it once without coding.
+3. Rebuild the smallest example from memory.
+4. Test a failure or edge case.
+5. Record one trade-off and link it to a wiki page.
+
+Prefer primary sources for semantics: Ruby and Rails guides, PostgreSQL
+documentation, HTTP specifications, GraphQL specifications, and official
+security advisories. Use videos for intuition, demonstrations, and production
+stories, then verify exact behavior against documentation.
