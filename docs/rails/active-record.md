@@ -57,3 +57,38 @@ N+1 query.
 - loading an entire table into memory;
 - adding callbacks that hide network calls or important writes;
 - assuming a transaction protects work done by another service.
+
+## Query construction and safety
+
+Prefer relation methods and bound values:
+
+```ruby
+User.where(tenant_id: tenant.id).where("created_at >= ?", cutoff)
+```
+
+Do not interpolate user input into SQL, table names, order clauses, or
+fragments. For dynamic ordering, map external names to a fixed allowlist.
+Scope every query by tenant or actor before loading the record.
+
+## Locking and optimistic updates
+
+Use a row lock for a short critical section when one worker must serialize a
+transition. Use optimistic locking when conflicts are uncommon and a caller
+can reload or reconcile:
+
+```ruby
+order.with_lock do
+  raise InvalidTransition unless order.pending?
+  order.update!(status: "paid")
+end
+```
+
+The lock protects the database row, not an external payment call. Perform
+remote work outside the transaction and record an idempotency key.
+
+## Query lifecycle
+
+A relation is lazy until evaluated. `count`, `exists?`, iteration, and
+serialization can each issue queries. Make evaluation boundaries visible in
+performance-sensitive code, preload known associations, and avoid returning
+an unbounded relation from a public operation.

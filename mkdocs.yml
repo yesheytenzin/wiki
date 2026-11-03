@@ -42,6 +42,7 @@ nav:
   - Home: index.md
   - Start here:
       - Learning path: learning-path/index.md
+      - Deep study method: learning-path/deep-study.md
       - Projects: learning-path/projects.md
       - Self-check questions: questions.md
       - Glossary: glossary.md

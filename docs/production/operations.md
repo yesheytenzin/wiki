@@ -38,3 +38,28 @@ creates noise instead of reliability.
 4. Mitigate first: disable a feature, shed load, or roll back.
 5. Preserve evidence before changing the system.
 6. Record the cause and preventive action in a postmortem.
+
+## Instrumentation boundaries
+
+Instrument at request entry, database calls, queue operations, and outbound
+network calls. Carry a correlation ID across those boundaries, but do not
+assume it proves causality when asynchronous work is involved; record a
+causation ID and job/event ID as well.
+
+Metrics should have bounded labels. A user ID, URL, or raw exception message
+can create an unbounded time-series cardinality problem. Put high-cardinality
+detail in sampled logs or traces instead.
+
+## Health checks
+
+Separate liveness from readiness. Liveness answers “should this process be
+restarted?” Readiness answers “should this process receive traffic?” A
+liveness check that depends on the database can restart every process during a
+database outage and make recovery worse.
+
+## Safe operations
+
+Use feature flags, canaries, bounded migrations, and rollback commands that
+are rehearsed before an incident. A rollback is not safe if the new release
+has already written data the old release cannot read. Check compatibility
+before deploying and include the verification query in the runbook.

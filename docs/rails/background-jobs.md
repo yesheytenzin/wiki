@@ -44,3 +44,34 @@ Implement a job that sends a receipt. Test a successful delivery, a transient
 timeout, a permanent provider error, and a worker crash after delivery. State
 which outcomes can duplicate and how the application prevents duplicate
 charges or messages.
+
+## Retry mathematics
+
+Backoff reduces pressure on a failing dependency. Add jitter so thousands of
+workers do not retry at the same instant. Bound total attempts and elapsed
+time; an operation that is still retrying after its business value expires is
+not reliable.
+
+Classify errors:
+
+| Error | Typical action |
+| --- | --- |
+| Invalid input | Mark failed and alert only if unexpected |
+| Authentication/configuration | Stop or quarantine; retries will not fix it |
+| Rate limit | Retry after provider guidance |
+| Timeout | Retry only with idempotency protection |
+| Permanent missing record | Mark handled or dead-letter |
+
+## Job observability
+
+Measure queue age, execution duration, attempt count, success rate, retry rate,
+dead-letter count, and provider latency. Include job ID, entity ID, operation
+key, and attempt in structured logs. Do not log full payloads when they contain
+personal or secret data.
+
+## Deployments and jobs
+
+Workers and web processes may run different code during a rolling deploy.
+Version job payloads, keep consumers backward-compatible, and deploy producers
+only after consumers understand the new shape. A schema migration must be
+expand-and-contract when queued jobs can outlive a release.

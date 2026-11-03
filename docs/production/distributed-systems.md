@@ -48,3 +48,25 @@ reduce duplicate work.
 
 Every pattern adds complexity. Define the failure it prevents, the metric that
 shows it is active, and the recovery path.
+
+## Partial failure walkthrough
+
+Suppose an order service writes `paid`, then calls a payment provider. The
+process times out after the provider accepted the charge. The local system
+cannot know from the timeout alone whether the charge happened.
+
+A robust design uses a provider idempotency key, records the local operation,
+retries safely or queries provider status, and reconciles ambiguous outcomes.
+It does not blindly issue a second charge or tell the user that payment
+definitely failed.
+
+Apply the same reasoning to webhooks, event publication, email, and inventory.
+For every remote call, record request identity, timeout behavior, retry policy,
+provider result, and repair path.
+
+## Multi-region concerns
+
+Regions add latency, replication lag, clock differences, and split-brain
+choices. Decide where writes are authoritative, what data can be stale, and
+how traffic moves during a region failure. Do not claim global availability
+while relying on one region's database or control plane.

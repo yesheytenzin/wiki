@@ -34,3 +34,30 @@ traces.
 For subscriptions, monitor connection count, delivery lag, disconnects, and
 backpressure. Do not introduce subscriptions until reconnect, authorization,
 and missed-event behavior are specified.
+
+## Testing query cost and batching
+
+Keep a representative operation corpus with shallow, deeply nested, wide,
+aliased, and paginated queries. Assert that rejected operations fail before
+database work begins. For accepted operations, record a query budget and fail
+tests when a resolver introduces an unexpected N+1 query.
+
+Authorization tests must exercise the same operation through direct and nested
+paths. A user who cannot read a draft directly must not read it through an
+author, tag, search result, or connection.
+
+## Schema change workflow
+
+1. Build the schema and run breaking-change checks.
+2. Run the saved operation registry.
+3. Measure deprecated-field usage.
+4. Deploy additive changes.
+5. Migrate clients.
+6. Remove only after the usage window and rollback plan are complete.
+
+## Practice
+
+Create a failing operation for each of: invalid variable, unauthorized
+object, partial nullable failure, N+1 relation, excessive depth, excessive
+page size, and a retried mutation. Add the metric and operator action that
+should accompany each failure.

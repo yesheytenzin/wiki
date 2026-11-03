@@ -51,3 +51,34 @@ Implement a token bucket with atomic operations, simulate two workers claiming
 the same job, and document what happens if Redis disappears between two
 commands. Add metrics for hit rate, memory, evictions, latency, and rejected
 operations.
+
+## Atomicity and races
+
+Commands such as increment, set-if-absent, and expiration have precise atomic
+semantics. A sequence of separate commands may not:
+
+```text
+worker A: read counter = 4
+worker B: read counter = 4
+worker A: write 5
+worker B: write 5
+```
+
+The intended result of six increments is lost. Use an atomic command, a
+server-side script, or a database transaction whose isolation protects the
+invariant. Keep scripts bounded and version their assumptions.
+
+## Locks are leases
+
+A distributed lock is usually a time-limited lease, not permanent ownership.
+The owner may pause longer than the TTL and another worker may acquire it.
+Use fencing tokens or a durable compare-and-check when stale owners could
+corrupt state. Prefer database constraints and idempotent work over locks
+where possible.
+
+## Cache stampedes
+
+When a popular key expires, many requests can regenerate it simultaneously.
+Use request coalescing, jittered expiration, stale-while-revalidate, or a
+short lease. Set a fallback for cache outage and watch database load: a cache
+that fails open can turn a small Redis incident into a database outage.

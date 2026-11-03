@@ -29,3 +29,35 @@ consistent, or pending.
 Implement two concurrent attempts to reserve the last inventory item. First
 show the race without protection, then add a constraint or lock and test the
 failure path.
+
+## Lost update example
+
+Two requests read a balance of 100. Both subtract 30 and write 70. Each
+request was locally correct, but the final balance lost one subtraction.
+Options include:
+
+- an atomic SQL update with a predicate;
+- a row lock around read and write;
+- optimistic version checking;
+- a ledger where each debit is an append-only fact.
+
+Choose based on contention, audit requirements, and whether callers can retry.
+An atomic update that affects zero rows should become a defined conflict, not a
+successful response.
+
+## Isolation is not magic
+
+Isolation controls visibility and conflict behavior between transactions; it
+does not validate business meaning. A serializable transaction may still
+commit an invalid external side effect, and a read-only query may observe a
+snapshot that becomes stale before it is shown to a user.
+
+Document the freshness requirement: read-your-writes, monotonic reads,
+eventual consistency, or strong consistency. Match the user experience and
+repair process to that choice.
+
+## Practice
+
+Implement a balance transfer with a ledger and with a mutable balance. Run
+concurrent transfers, kill a worker between writes, and compare auditability,
+retry safety, query cost, and recovery behavior.

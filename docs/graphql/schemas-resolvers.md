@@ -48,3 +48,28 @@ the data becomes visible.
 A mutation should have a clear transaction boundary and idempotency strategy.
 For a retried mutation, accept a client-provided idempotency key and persist
 the result or a domain-level unique operation record.
+
+## Nullability and evolution
+
+Use non-null for values the server guarantees for every successful object.
+Use nullable when absence is a valid result or when a partial failure should
+not remove sibling data. Tightening a nullable field to non-null can break a
+client that already handles `null`; treat it as a compatibility change.
+
+Deprecate with a reason and measure operation usage. A field is not safe to
+remove because the frontend repository has no references: mobile clients,
+partners, saved operations, and older releases may still use it.
+
+## Resolver and database boundaries
+
+A resolver should not assemble SQL independently for every field. Centralize
+authorization-scoped loaders and give them explicit selection and pagination
+contracts. Keep transaction and domain operations below the resolver so the
+same behavior can be used by REST, jobs, or internal callers.
+
+## Practice
+
+For a `publishArticle` mutation, specify actor, input validation, state
+transition, transaction, event publication, idempotency, payload errors, and
+the fields visible to the caller. Then write the same operation as a REST
+endpoint and compare the ownership boundaries.

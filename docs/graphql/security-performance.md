@@ -35,3 +35,34 @@ schema unless introspection is controlled for the environment.
 Rate-limit by actor, credential, IP, and operation where appropriate. Avoid
 putting secrets or personal data in error extensions, traces, persisted-query
 registries, or query logs.
+
+## Cost analysis
+
+Depth counts nesting but not actual work. A field that performs a full-text
+search or loads a large relation may cost more than several scalar fields.
+Assign field weights, multiply them through list selections, and cap the
+result. Treat client-provided limits as inputs to validation, not guarantees.
+
+Reject expensive operations before resolving them. A timeout after partial
+execution still consumes database and provider capacity.
+
+## Authorization through nested fields
+
+Authorization must follow the data path:
+
+```text
+viewer → organization → project → private document
+```
+
+Checking only that the viewer can access the organization is insufficient if
+project membership or document visibility has a second rule. Data loaders must
+carry the same authorization scope as direct loads and must not cache a result
+for one actor and return it to another.
+
+## Production hardening
+
+Separate public and internal schemas when their trust models differ. Consider
+disabling unrestricted introspection in production while retaining a safe
+schema registry for trusted clients. Persist approved operations, enforce
+variable limits, redact logs, and test aliases, fragments, recursive
+selections, and deeply nested connections.
