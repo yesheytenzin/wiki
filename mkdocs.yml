@@ -1,0 +1,70 @@
+site_name: Backend Wiki
+site_description: A practical learning path for Ruby, Rails, and backend engineering.
+site_url: https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/
+repo_name: YOUR-USERNAME/YOUR-REPOSITORY
+repo_url: https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Start here:
+      - Learning path: learning-path/index.md
+      - Projects: learning-path/projects.md
+      - Self-check questions: questions.md
+  - Ruby:
+      - Ruby fundamentals: ruby/fundamentals.md
+      - Objects, modules, and blocks: ruby/objects-modules-blocks.md
+      - Testing with RSpec: ruby/testing.md
+  - Rails:
+      - Rails request lifecycle: rails/request-lifecycle.md
+      - APIs and authentication: rails/apis-authentication.md
+      - Active Record and transactions: rails/active-record.md
+      - Background jobs: rails/background-jobs.md
+  - Backend foundations:
+      - HTTP and web architecture: backend/http.md
+      - PostgreSQL and data modeling: backend/postgresql.md
+      - Security: backend/security.md
+  - Production:
+      - Caching and performance: production/caching-performance.md
+      - Observability and deployment: production/operations.md
+      - Distributed systems: production/distributed-systems.md
+  - Algorithms:
+      - Algorithms for backend systems: algorithms/index.md
+  - Postmortems:
+      - How to write a postmortem: postmortems/index.md
+  - Resources:
+      - Books, talks, and tools: resources/index.md
+  - Contribute: contribute.md
