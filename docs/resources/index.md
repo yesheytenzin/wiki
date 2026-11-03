@@ -22,6 +22,15 @@ Prefer talks with code, diagrams, and production evidence over broad
 motivational content. Record the speaker, date, and why the link is useful so
 links can be reviewed rather than accumulating indefinitely.
 
+### Topic searches
+
+- [Ruby and object-oriented design](https://www.youtube.com/results?search_query=Ruby+object+oriented+design)
+- [Rails architecture](https://www.youtube.com/results?search_query=Rails+architecture+production)
+- [GraphQL Rails](https://www.youtube.com/results?search_query=GraphQL+Rails+production)
+- [PostgreSQL query planning](https://www.youtube.com/results?search_query=PostgreSQL+query+planning+EXPLAIN)
+- [Distributed systems](https://www.youtube.com/results?search_query=distributed+systems+backend+engineering)
+- [Incident response and postmortems](https://www.youtube.com/results?search_query=incident+response+engineering+postmortem)
+
 ## Useful tools
 
 Ruby, Rails, RSpec, RuboCop, Bundler, PostgreSQL, Redis, Docker, GitHub

@@ -27,3 +27,9 @@ checking documentation.
 - Which client is forced to depend on methods it does not use?
 - Which high-level policy currently constructs or knows about an infrastructure
   detail?
+- How do cohesion and coupling differ, and where is each visible in your
+  current design?
+- Which SOLID principle would you apply to this change, and what new
+  complexity would that introduce?
+- Can you add a payment provider without modifying the order policy?
+- Does your fake adapter obey the production adapter's complete contract?

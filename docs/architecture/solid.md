@@ -13,6 +13,39 @@ change belongs, which behavior must remain stable, and which dependency should
 be replaceable. Apply them when a system has real change pressure; do not
 split every five-line method into an abstraction.
 
+## Before SOLID: coupling and cohesion
+
+SOLID becomes easier to apply when two measures are clear:
+
+- **Cohesion:** how strongly the responsibilities inside one unit belong
+  together. High cohesion means a class has a focused purpose.
+- **Coupling:** how much one unit knows about or depends on another. Low
+  coupling means a change can remain local.
+
+The goal is not minimum coupling at any cost. A useful design has cohesive
+units and explicit coupling at boundaries. A database model may reasonably
+couple itself to persistence, while a pricing policy should not know how an
+email provider works.
+
+## How the principles fit together
+
+The principles reinforce one another:
+
+```text
+cohesive policy
+    ↓
+small interface → substitutable adapter
+    ↓
+dependency injected at a boundary
+    ↓
+new variation added without changing stable policy
+```
+
+SRP identifies responsibilities. OCP gives likely variation an extension
+point. LSP checks whether implementations honor the point. ISP keeps the
+point small. DIP makes the high-level policy depend on the point rather than
+an infrastructure detail.
+
 ## 1. Single Responsibility Principle
 
 A class should have one cohesive reason to change. “One responsibility” means
@@ -264,6 +297,47 @@ payment, saves the order, sends an email, and renders JSON:
 - make retries safe;
 - test declined payment, database failure, and email failure separately;
 - explain which invariant belongs in the database.
+
+## Complete study exercise
+
+Create a small order system in plain Ruby before using Rails:
+
+1. Define an order state machine: `pending → paid → shipped` and
+   `pending → cancelled`.
+2. Add a payment gateway and a fake gateway with the same contract.
+3. Add a notification adapter that can fail transiently.
+4. Make the payment operation idempotent.
+5. Add a repository boundary and an in-memory implementation for tests.
+6. Add a Rails or GraphQL transport adapter.
+7. Record the design decisions and the reasons not to abstract stable code.
+
+For each step, write a test before refactoring. Compare the initial design and
+the final design by the number of unrelated files changed for a new payment
+provider or notification channel.
+
+## Related video study
+
+These links open focused YouTube searches so you can choose a current talk
+with the language and depth you prefer:
+
+- [SOLID principles in Ruby](https://www.youtube.com/results?search_query=SOLID+principles+Ruby)
+- [SOLID principles with Rails examples](https://www.youtube.com/results?search_query=SOLID+principles+Ruby+on+Rails)
+- [Dependency inversion and dependency injection](https://www.youtube.com/results?search_query=dependency+inversion+dependency+injection+Ruby)
+- [Refactoring Rails service objects](https://www.youtube.com/results?search_query=refactoring+Rails+service+objects+SOLID)
+- [Cohesion and coupling explained](https://www.youtube.com/results?search_query=cohesion+coupling+software+design)
+
+When studying a video, do not copy the class structure immediately. Identify
+the change pressure the speaker is addressing, then reproduce the example in
+your own code and test the trade-off.
+
+## Related wiki pages
+
+- [Ruby internals and concurrency](../ruby/internals-concurrency.md)
+- [Domain modeling and boundaries](domain-modeling.md)
+- [Consistency and concurrency](consistency.md)
+- [GraphQL schemas and resolvers](../graphql/schemas-resolvers.md)
+- [Testing with RSpec](../ruby/testing.md)
+- [API design](api-design.md)
 
 ## Self-check
 
