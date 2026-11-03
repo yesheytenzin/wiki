@@ -44,25 +44,40 @@ nav:
       - Learning path: learning-path/index.md
       - Projects: learning-path/projects.md
       - Self-check questions: questions.md
-  - Ruby:
+      - Glossary: glossary.md
+  - 1. Ruby:
       - Ruby fundamentals: ruby/fundamentals.md
       - Objects, modules, and blocks: ruby/objects-modules-blocks.md
       - Testing with RSpec: ruby/testing.md
-  - Rails:
+  - 2. Web and data foundations:
+      - HTTP and web architecture: backend/http.md
+      - DNS, networking, and processes: backend/networking.md
+      - PostgreSQL and data modeling: backend/postgresql.md
+      - Redis and ephemeral data: backend/redis.md
+      - Backend security: backend/security.md
+  - 3. Rails application development:
       - Rails request lifecycle: rails/request-lifecycle.md
+      - Routing, controllers, and responses: rails/routing-controllers.md
       - APIs and authentication: rails/apis-authentication.md
       - Active Record and transactions: rails/active-record.md
+      - Validation and serialization: rails/validation-serialization.md
       - Background jobs: rails/background-jobs.md
-  - Backend foundations:
-      - HTTP and web architecture: backend/http.md
-      - PostgreSQL and data modeling: backend/postgresql.md
-      - Security: backend/security.md
-  - Production:
+  - 4. Architecture:
+      - API design: architecture/api-design.md
+      - Queues and events: architecture/queues-events.md
+      - Distributed systems: production/distributed-systems.md
+  - 5. Production:
       - Caching and performance: production/caching-performance.md
       - Observability and deployment: production/operations.md
-      - Distributed systems: production/distributed-systems.md
-  - Algorithms:
+      - Reliability and incident response: production/reliability.md
+  - 6. Algorithms:
+      - Complexity and data structures: algorithms/complexity.md
       - Algorithms for backend systems: algorithms/index.md
+      - Pagination, rate limits, and scheduling: algorithms/patterns.md
+  - Projects:
+      - Project sequence: learning-path/projects.md
+      - URL shortener: projects/url-shortener.md
+      - Notification service: projects/notification-service.md
   - Postmortems:
       - How to write a postmortem: postmortems/index.md
   - Resources:
