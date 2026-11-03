@@ -18,8 +18,8 @@ storage.
 ## Stage 3: Rails application development
 
 Learn routing, controllers, models, validation, serialization,
-authentication, authorization, and jobs. You should be able to build a
-well-tested JSON API with explicit error behavior.
+authentication, authorization, jobs, and GraphQL. You should be able to build
+well-tested APIs with explicit error behavior and a stable schema.
 
 ## Stage 4: Architecture
 
@@ -36,6 +36,20 @@ incident response. You should be able to operate the service you built.
 
 Learn complexity, data structures, pagination, rate limiting, and scheduling.
 You should be able to justify an algorithm using its invariant and cost.
+
+## Expert track
+
+After completing the stages, repeat them at a larger scale:
+
+1. Read the framework and database documentation for the feature you use.
+2. Rebuild a small version without the framework abstraction.
+3. Measure it under load and identify its bottleneck.
+4. Introduce a failure, observe the symptoms, and recover.
+5. Write a design note comparing two valid approaches.
+
+Expertise is demonstrated by explaining trade-offs and operating the result,
+not by memorizing APIs. For each project, keep an architecture decision
+record, a threat model, a load result, and a postmortem.
 
 Use the [project sequence](projects.md) to turn each stage into practice.
 

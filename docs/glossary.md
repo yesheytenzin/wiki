@@ -14,3 +14,7 @@
 | **Transaction** | A group of database operations committed or rolled back together. |
 | **TTL** | Time-to-live before cached or temporary data expires. |
 | **Backpressure** | A mechanism that slows producers when consumers cannot keep up. |
+| **Data loader** | A batching mechanism that combines related field loads to avoid N+1 queries. |
+| **GraphQL schema** | The typed contract describing available operations, fields, arguments, and nullability. |
+| **Resolver** | Code that computes a GraphQL field value for a particular request. |
+| **Persisted query** | A registered operation identified by a stable key instead of arbitrary query text. |

@@ -11,3 +11,11 @@ checking documentation.
 - What happens to a transaction when the process loses its database connection?
 - Which cache entries can be stale, and what is the invalidation strategy?
 - How would you deploy a schema change without breaking the previous release?
+- What is the difference between a GraphQL query, mutation, and subscription?
+- Where should GraphQL authorization run, and how do you prevent field leakage?
+- How would you detect and fix a GraphQL N+1 query?
+- Which consistency guarantee does this endpoint need, and why?
+- What is the capacity limit of the database connection pool?
+- What happens when a retry succeeds remotely but times out locally?
+- Which metric would tell you that queue consumers are falling behind?
+- What would you remove first from a system under overload?

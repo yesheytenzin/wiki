@@ -48,6 +48,7 @@ nav:
   - 1. Ruby:
       - Ruby fundamentals: ruby/fundamentals.md
       - Objects, modules, and blocks: ruby/objects-modules-blocks.md
+      - Ruby internals and concurrency: ruby/internals-concurrency.md
       - Testing with RSpec: ruby/testing.md
   - 2. Web and data foundations:
       - HTTP and web architecture: backend/http.md
@@ -59,17 +60,24 @@ nav:
       - Rails request lifecycle: rails/request-lifecycle.md
       - Routing, controllers, and responses: rails/routing-controllers.md
       - APIs and authentication: rails/apis-authentication.md
+      - GraphQL fundamentals: graphql/fundamentals.md
+      - GraphQL schemas and resolvers: graphql/schemas-resolvers.md
+      - GraphQL security and performance: graphql/security-performance.md
+      - GraphQL testing and operations: graphql/testing-operations.md
       - Active Record and transactions: rails/active-record.md
       - Validation and serialization: rails/validation-serialization.md
       - Background jobs: rails/background-jobs.md
   - 4. Architecture:
       - API design: architecture/api-design.md
       - Queues and events: architecture/queues-events.md
+      - Domain modeling and boundaries: architecture/domain-modeling.md
+      - Consistency and concurrency: architecture/consistency.md
       - Distributed systems: production/distributed-systems.md
   - 5. Production:
       - Caching and performance: production/caching-performance.md
       - Observability and deployment: production/operations.md
       - Reliability and incident response: production/reliability.md
+      - Capacity planning: production/capacity-planning.md
   - 6. Algorithms:
       - Complexity and data structures: algorithms/complexity.md
       - Algorithms for backend systems: algorithms/index.md
@@ -78,6 +86,7 @@ nav:
       - Project sequence: learning-path/projects.md
       - URL shortener: projects/url-shortener.md
       - Notification service: projects/notification-service.md
+      - GraphQL content API: projects/graphql-content-api.md
   - Postmortems:
       - How to write a postmortem: postmortems/index.md
   - Resources:
