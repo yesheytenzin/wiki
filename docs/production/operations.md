@@ -63,3 +63,20 @@ Use feature flags, canaries, bounded migrations, and rollback commands that
 are rehearsed before an incident. A rollback is not safe if the new release
 has already written data the old release cannot read. Check compatibility
 before deploying and include the verification query in the runbook.
+
+## Worked deployment example
+
+For adding `users.display_name`:
+
+```text
+Release 1: add nullable column
+Release 2: write old and new representations
+Backfill: update bounded batches and monitor locks
+Release 3: read new representation
+Release 4: stop writing old representation
+Cleanup: remove old column after rollback window
+```
+
+Never deploy code that reads a column before the migration is complete, and
+never remove a column while an older process may still query it. The rollback
+plan must account for data written by the new release.

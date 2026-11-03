@@ -62,3 +62,28 @@ excessive mocks make refactoring harder without proving user behavior.
 Run tests in random order and in parallel when possible. Make time, randomness,
 network calls, and job execution injectable. Add a regression test for every
 production bug before changing the implementation.
+
+## Complete example
+
+```ruby
+RSpec.describe OrderTotal do
+  subject(:total) { described_class.new(lines).call }
+
+  let(:lines) { [{ price_cents: 1_000, quantity: 2 }] }
+
+  it "returns integer cents" do
+    expect(total).to eq(2_000)
+  end
+
+  it "rejects a non-positive quantity" do
+    lines.first[:quantity] = 0
+
+    expect { total }.to raise_error(ArgumentError, /positive/)
+  end
+end
+```
+
+The first example proves the public result. The second proves the invariant
+and its failure contract. Add a request test when the same rule is exposed
+through Rails; do not assume a unit test proves parameter filtering or
+authorization.

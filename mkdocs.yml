@@ -44,6 +44,8 @@ nav:
       - Learning path: learning-path/index.md
       - Deep study method: learning-path/deep-study.md
       - Projects: learning-path/projects.md
+      - Hands-on labs: learning-path/labs.md
+      - Code exam: learning-path/code-exam.md
       - Self-check questions: questions.md
       - Glossary: glossary.md
   - 1. Ruby:

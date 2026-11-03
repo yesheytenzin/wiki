@@ -65,3 +65,19 @@ Design an API for creating and cancelling orders. Write the OpenAPI-like
 contract in prose, include all error cases, then implement both a REST and a
 GraphQL version. Compare caching, pagination, client ergonomics, and failure
 semantics.
+
+## Worked contract
+
+```text
+POST /orders
+Request: { "line_items": [{ "product_id": "p1", "quantity": 2 }] }
+201:     { "id": "o1", "status": "pending" }
+401:     unauthenticated
+422:     invalid quantity or unavailable product
+409:     idempotency key already represents a different request
+```
+
+The `409` case is distinct from invalid syntax: the request is well-formed,
+but conflicts with existing operation state. A timeout does not tell the
+client which response occurred, so the client retries with the same
+idempotency key and receives the stored result.

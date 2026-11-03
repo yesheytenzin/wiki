@@ -71,3 +71,38 @@ disconnects so abandoned work does not consume resources indefinitely.
 Trace one request from `curl` to a committed row. Add a request ID, a
 transaction failure, an authorization failure, and a slow dependency. For
 each case, document status, logs, metrics, database state, and retry behavior.
+
+## Worked Rails example
+
+```ruby
+class OrdersController < ApplicationController
+  before_action :authenticate_user!
+
+  def show
+    order = current_user.orders.includes(:line_items).find(params[:id])
+    render json: OrderSerializer.new(order)
+  end
+
+  def create
+    order = Orders::Create.call(
+      actor: current_user,
+      attributes: order_params.to_h
+    )
+    render json: OrderSerializer.new(order), status: :created
+  rescue Orders::Create::Invalid => error
+    render json: { error: { code: "invalid_order", message: error.message } },
+      status: :unprocessable_entity
+  end
+
+  private
+
+  def order_params
+    params.require(:order).permit(line_items: %i[product_id quantity])
+  end
+end
+```
+
+The controller owns transport concerns. `Orders::Create` owns application
+orchestration, the model/database own durable invariants, and the serializer
+owns the response shape. Request tests should verify authentication,
+authorization, permitted parameters, status, response fields, and rollback.

@@ -54,3 +54,20 @@ Define recovery point and recovery time objectives for each data class. Test
 restores in an isolated environment, verify row counts and application
 behavior, and document how to prevent the restored system from sending
 duplicate external effects.
+
+## Worked incident exercise
+
+Scenario: queue age rises from 30 seconds to 20 minutes after a provider
+starts timing out.
+
+Expected response:
+
+1. Confirm user impact and stop optional producers.
+2. Check provider latency, worker concurrency, retry rate, and dead letters.
+3. Reduce retry pressure with backoff or disable the provider integration.
+4. Preserve failed payload identities and request IDs.
+5. Drain or replay only after the provider is healthy.
+6. Write a postmortem with an alert on queue age and provider saturation.
+
+The exercise is complete only when the metric, mitigation, and verification
+step are written into a runbook.

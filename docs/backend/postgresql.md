@@ -86,3 +86,25 @@ recovery point and recovery time objectives, test point-in-time recovery, and
 verify that application secrets, migrations, extensions, and external side
 effects are handled. A restored database must not automatically resend old
 notifications or webhooks.
+
+## Worked example: inventory reservation
+
+Protect the last unit with a conditional update:
+
+```sql
+UPDATE inventory
+SET available = available - 1
+WHERE product_id = $1 AND available > 0
+RETURNING available;
+```
+
+If no row is returned, the reservation failed. This single statement avoids
+the read-then-write race. Record a reservation ID with a unique constraint if
+the client can retry the request.
+
+### Exercise
+
+Run two concurrent reservations against one available unit. Show the unsafe
+read-then-write implementation losing an update, then show the conditional
+update preserving the invariant. Explain how expiration and cancellation
+return inventory without double-releasing it.

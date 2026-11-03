@@ -52,3 +52,25 @@ Separate “ready to run” from “claimed by a worker.” A lease must expire,
 the work must be idempotent because the lease can expire while the original
 worker is still running. Record attempt count and next-attempt time so
 operators can distinguish a slow job from a poison message.
+
+## Worked token bucket
+
+For capacity `C`, refill rate `R` tokens per second, current tokens `T`, and
+elapsed time `Δt`:
+
+```text
+new_tokens = min(C, T + R × Δt)
+accept if new_tokens >= cost
+new_tokens = new_tokens - cost
+```
+
+Store the token count and timestamp in one atomic operation. If two requests
+read and write separately, both can spend the same token. Decide whether the
+clock is local, centralized, or approximate across regions.
+
+### Exercise
+
+Implement a per-user limiter with a capacity of 10 and refill rate of 1 per
+second. Test a burst of 10, the 11th request, refill after 2 seconds, clock
+skew, concurrent requests, and Redis failure. Return `429` with a retry
+estimate without exposing another user's quota.

@@ -61,3 +61,25 @@ Create a failing operation for each of: invalid variable, unauthorized
 object, partial nullable failure, N+1 relation, excessive depth, excessive
 page size, and a retried mutation. Add the metric and operator action that
 should accompany each failure.
+
+## Worked operation example
+
+```graphql
+mutation CancelOrder($input: CancelOrderInput!) {
+  cancelOrder(input: $input) {
+    order { id status }
+    errors { code message field }
+  }
+}
+```
+
+Test at least:
+
+1. authenticated owner cancels a pending order;
+2. another user receives a forbidden result without order leakage;
+3. an already-shipped order returns a domain error;
+4. the same idempotency key returns the same result;
+5. a provider or database failure does not report success.
+
+The test should assert both the response and durable state. A response-only
+test can pass while a transaction has partially changed the database.
